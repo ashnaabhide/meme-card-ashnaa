@@ -20,9 +20,61 @@
 </head>
 
 <body>
-  <meme-card-ashnaa></meme-card-ashnaa>
+  <div class="buttons">
+    <button class="duplicate">duplicate</button>
+    <button class="modifytitle">modify title</button>
+    <button id="deletelastcard">delete</button>
+    <button data-toggle-btn>toggle</button>
+  </div>
+  <div id="app">
+    <meme-card-ashnaa></meme-card-ashnaa>
+  </div>
 
   <script type="module" src="./src/meme-card-ashnaa.js"></script>
-</body>
+  <script>
 
+document.querySelector('button[data-toggle-btn]').addEventListener('click', (e) => {
+  const details = document.querySelector('meme-card-ashnaa').shadowRoot.querySelector('details')
+  console.log(details);
+  if (details.getAttribute('open')) {
+    details.removeAttribute('open');
+  }
+  else {
+    details.setAttribute('open','open');    
+  }
+});
+
+    //duplicate the first item 
+    document.querySelector('.duplicate').addEventListener('click', function(e) {
+  const itemToClone = document.querySelector('meme-card-ashnaa').cloneNode();
+  document.querySelector('#app').appendChild(itemToClone);
+});
+
+// modify name of 1st item
+document.querySelector('.modifytitle').addEventListener('click', function(e) {
+  let name = prompt("name the dog!!!");
+  if (name) {
+    document.querySelector('meme-card-ashnaa').name = name;
+  }
+});
+
+// delete the last item
+document.querySelector('#deletelastcard').addEventListener('click', function(e) {
+  let wantsTo = confirm("Are you sure?");
+  if (wantsTo) {
+    if (document.querySelector('#app :last-child') !== document.querySelector('meme-card-ashnaa')) {
+      document.querySelector('#app :last-child').remove();      
+    }
+    else {
+      alert("borzoi is forever.");
+    }
+  }
+});
+
+
+
+
+
+  </script>
+</body>
 </html>

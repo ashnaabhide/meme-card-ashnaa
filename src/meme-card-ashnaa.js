@@ -1,88 +1,141 @@
 import { LitElement, html, css } from 'lit';
 
-const logo = new URL('../assets/open-wc-logo.svg', import.meta.url).href;
+const meme = new URL('../assets/meme.jpg', import.meta.url).href;
 
-class MemeCardAshnaa extends LitElement {
-  static properties = {
-    header: { type: String },
+
+export class MemeCard extends LitElement {
+
+  static get properties() {
+    return {
+      name: {
+        type: String,
+        reflect: true
+      }, 
+      position: {
+        type: String,
+      }
+    }
   }
 
-  static styles = css`
-    :host {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      font-size: calc(10px + 2vmin);
-      color: #1a2b42;
-      max-width: 960px;
-      margin: 0 auto;
-      text-align: center;
-      background-color: var(--meme-card-ashnaa-background-color);
-    }
 
-    main {
-      flex-grow: 1;
-    }
+  static get styles(){
+    return css`
+      .wrapper {
+  width: 400px;
+  border: 2px solid black;
+  display: inline-flex;
+}
 
-    .logo {
-      margin-top: 36px;
-      animation: app-logo-spin infinite 20s linear;
-    }
+.image {
+  width: 400px;
+}
 
-    @keyframes app-logo-spin {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
+.header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem; /* scales relatively */
+  
+  
+}
 
-    .app-footer {
-      font-size: calc(12px + 0.5vmin);
-      align-items: center;
-    }
+.header h3:hover {
+  font-style: italic; 
+  font-size: 1.1em;
+}
 
-    .app-footer a {
-      margin-left: 5px;
-    }
-  `;
+.header h3, 
+.header h4{
+  transition: .3s ease-in-out all;
+  margin: 16px;
+  font-style: normal;
+  
+}
+.buttons button:focus, 
+.buttons button:hover {
+  background-color: rgba(200, 0, 50, .5);
+}
+/*
+.buttons button:active {
+  background-color: rgba(200, 0, 200, .5); - shades in the part of the project you're not actively working on
+}
+*/
+ 
+.buttons {
+  display: block;
+  
+}
+button {
+  padding: 12px;
+  font-size: 32px;
+}
+
+
+
+details{
+  margin-left: 24px;
+  padding: 10px;
+}
+.details summary {
+  font-size: 20px;
+  font-weight: bold;
+  
+}
+
+@media only screen and (max-width: 1200px){
+  .wrapper{
+    background-color: pink;
+  }
+}
+@media only screen and (max-width: 600px){
+   .wrapper{
+    background-color: purple;
+  }
+  
+}
+@media only screen and (max-width: 425px){
+   .wrapper{
+    font-size: 1em;
+  }
+  details {
+    display: none;
+  }
+  .wrapper{
+    font-size: 1.1em; /*this will take priority*/
+  }
+}
+    `;
+  }
+
 
   constructor() {
     super();
-    this.header = 'My app';
+    this.name = "Borzoi!!!!";
+    this.position = "big nose dog";
   }
 
   render() {
     return html`
-      <main>
-        <div class="logo"><img alt="open-wc logo" src=${logo} /></div>
-        <h1>${this.header}</h1>
-
-        <p>Edit <code>src/MemeCardAshnaa.js</code> and save to reload.</p>
-        <a
-          class="app-link"
-          href="https://open-wc.org/guides/developing-components/code-examples/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Code examples
-        </a>
-      </main>
-
-      <p class="app-footer">
-        🚽 Made with love by
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/open-wc"
-          >open-wc</a
-        >.
-      </p>
+    
+<div class="wrapper">
+  <div class="container">
+  <img class="image" src="https://static.boredpanda.com/blog/wp-content/uploads/2020/05/700-1.jpg" />
+  <div class="header">
+  <h3>${this.name}</h3>
+  <h4>${this.position}</h4>
+    <details class="details">
+      <summary>Details</summary>
+      <div>
+        <ul>
+        <li>The magnificent borzoi! </li>
+        <li>Look how  disproportionate its nose is. Marvelous. </li>
+        </ul>
+      </div>
+  </details>
+  </div>
+</div>
+</div>
     `;
   }
 }
 
-customElements.define('meme-card-ashnaa', MemeCardAshnaa);
+customElements.define('meme-card-ashnaa', MemeCard);

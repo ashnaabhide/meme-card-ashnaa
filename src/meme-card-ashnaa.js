@@ -125,7 +125,7 @@ details{
 <!--<img class="image" src="$(meme)"/> -->
   <div class="header">
   <h3>${this.name}</h3>
-  <h4>${this.position}</h4>
+  <h4>${this.detail}</h4>
     <details class="details">
       <summary>Details</summary>
       <div>

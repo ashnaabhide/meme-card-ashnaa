@@ -26,7 +26,7 @@
     <button id="deletelastcard">delete</button>
     <button data-toggle-btn>toggle</button>
   </div>
-  <div id="app">
+  <div id="app"> <!-- global scope!! -->
     <meme-card-ashnaa></meme-card-ashnaa>
   </div>
 
@@ -45,9 +45,9 @@ document.querySelector('button[data-toggle-btn]').addEventListener('click', (e) 
 });
 
     //duplicate the first item 
-    document.querySelector('.duplicate').addEventListener('click', function(e) {
-  const itemToClone = document.querySelector('meme-card-ashnaa').cloneNode();
-  document.querySelector('#app').appendChild(itemToClone);
+  document.querySelector('.duplicate').addEventListener('click', function(e) {
+    const itemToClone = document.querySelector('meme-card-ashnaa').cloneNode();
+    document.querySelector('#app').appendChild(itemToClone);
 });
 
 // modify name of 1st item

@@ -12,7 +12,7 @@ export class MemeCard extends LitElement {
         type: String,
         reflect: true
       }, 
-      position: {
+      detail: {
         type: String,
       }
     }
@@ -111,7 +111,7 @@ details{
   constructor() {
     super();
     this.name = "Borzoi!!!!";
-    this.position = "big nose dog";
+    this.detail = "big nose dog";
   }
 
   render() {
@@ -119,10 +119,10 @@ details{
     
 <div class="wrapper">
   <div class="container">
-  <meme-maker alt="borzoi meme" image-url="https://static.boredpanda.com/blog/wp-content/uploads/2020/05/700-1.jpg
-" top-text="BORZOI" bottom-text="woof. ">
+  <meme-maker alt="borzoi meme" image-url="${meme}"
+ top-text="BORZOI" bottom-text="woof. ">
 </meme-maker>
-  <!--<img class="image" src="https://static.boredpanda.com/blog/wp-content/uploads/2020/05/700-1.jpg" /> -->
+<!--<img class="image" src="$(meme)"/> -->
   <div class="header">
   <h3>${this.name}</h3>
   <h4>${this.position}</h4>

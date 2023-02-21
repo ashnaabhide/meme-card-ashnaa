@@ -14,6 +14,7 @@
       padding: 0;
       font-family: sans-serif;
       background-color: #ededed;
+      --c: blue;
     }
   </style>
   <title>meme-card-ashnaa</title>
@@ -25,6 +26,7 @@
     <button class="modifytitle">modify title</button>
     <button id="deletelastcard">delete</button>
     <button data-toggle-btn>toggle</button>
+    <button class="changecolor">change color</button>
   </div>
   <div id="app"> <!-- global scope!! -->
     <meme-card-ashnaa></meme-card-ashnaa>
@@ -70,6 +72,18 @@ document.querySelector('#deletelastcard').addEventListener('click', function(e) 
     }
   }
 });
+
+color.addEventListener("click", function (e) {
+  
+  if (document.querySelector('bgcolorchange') == true) {
+    document.querySelector('meme-card-ashnaa').style.backgroundColor = "purple";
+    console.log("bg color changed");
+  } else {
+    document.querySelector('bgcolorchange') = "pink";
+  }
+
+});
+
 
 
 

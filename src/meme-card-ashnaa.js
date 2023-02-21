@@ -1,13 +1,17 @@
 import { LitElement, html, css } from 'lit';
 import "@lrnwebcomponents/meme-maker/meme-maker.js";
 
-const meme = new URL('../assets/meme.jpg', import.meta.url).href;
+const meme=new URL('../assets/meme.jpg', import.meta.url).href;
 
 
 export class MemeCard extends LitElement {
 
   static get properties() {
     return {
+      bgcolorchange: {
+        type: Boolean,
+        reflect: true
+      },
       name: {
         type: String,
         reflect: true
@@ -21,11 +25,14 @@ export class MemeCard extends LitElement {
 
   static get styles(){
     return css`
+    :host([bgcolorchange]) .all {
+      background-color: var(--c, purple); //no naming conventions for css variables (make them descriptive)
+    }
       .wrapper {
-  width: 400px;
-  border: 2px solid black;
-  display: inline-flex;
-}
+        width: 400px;
+        border: 2px solid black;
+        display: inline-flex; 
+      }
 
 .image {
   width: 400px;
@@ -112,6 +119,8 @@ details{
     super();
     this.name = "Borzoi!!!!";
     this.detail = "big nose dog";
+    this.bgcolorchange = "true";
+    
   }
 
   render() {
@@ -119,7 +128,7 @@ details{
     
 <div class="wrapper">
   <div class="container">
-  <meme-maker alt="borzoi meme" image-url="${meme}"
+  <meme-maker slot="borzoi meme" image-url="${meme}"
  top-text="BORZOI" bottom-text="woof. ">
 </meme-maker>
 <!--<img class="image" src="$(meme)"/> -->

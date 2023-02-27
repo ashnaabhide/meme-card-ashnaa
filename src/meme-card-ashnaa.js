@@ -8,9 +8,10 @@ export class MemeCard extends LitElement {
 
   static get properties() {
     return {
-      bgcolorchange: {
-        type: Boolean,
-        reflect: true
+      accentColor: {
+        type: String,
+        reflect: true, //important for styling
+        attribute: 'accent-color'
       },
       name: {
         type: String,
@@ -18,25 +19,52 @@ export class MemeCard extends LitElement {
       }, 
       detail: {
         type: String,
-      }
+      },
+      top: {
+        type: String,
+  
+      }, 
+      bottom: {
+        type: String,
+      },  
+      opened: {type: Boolean, reflect: true},
     }
   }
 
 
   static get styles(){
     return css`
-    :host([bgcolorchange]) .all {
-      background-color: var(--c, purple); //no naming conventions for css variables (make them descriptive)
+    meme-card-ashnaa[accent-color="blue"]{
+      background-color: var(--team-card-accent-color, lightblue);
+
     }
-      .wrapper {
+    meme-card-ashnaa[accent-color="green"]{
+      background-color: palegreen;
+      color: white;
+
+    }
+    meme-card-ashnaa[accent-color="pink"]{
+      background-color: pink;
+      color: white;
+
+    }
+    meme-card-ashnaa::part(card){
+      margin: 100px;
+    }
+
+
+      .card {
         width: 400px;
         border: 2px solid black;
         display: inline-flex; 
+        padding: var(--meme
+        -card-wrapper-padding, 16px 8px 16px 8px);
       }
 
 .image {
   width: 400px;
 }
+
 
 .header {
   text-align: center;
@@ -90,24 +118,24 @@ details{
 }
 
 @media only screen and (max-width: 1200px){
-  .wrapper{
+  .card{
     background-color: pink;
   }
 }
 @media only screen and (max-width: 600px){
-   .wrapper{
+   .card{
     background-color: purple;
   }
   
 }
 @media only screen and (max-width: 425px){
-   .wrapper{
+   .card{
     font-size: 1em;
   }
   details {
     display: none;
   }
-  .wrapper{
+  .card{
     font-size: 1.1em; /*this will take priority*/
   }
 }
@@ -119,26 +147,66 @@ details{
     super();
     this.name = "Borzoi!!!!";
     this.detail = "big nose dog";
-    this.bgcolorchange = "true";
-    
+    this.accentColor = null;
+    this.top = "woof";
+    this.bottom = "borzoi!";
+    this.opened = true;
   }
+
+  toggleEvent(e) {
+    console.log(this.opened);
+    console.log(this.shadowRoot.querySelector('details').getAttribute('open'));
+    const state = this.shadowRoot.querySelector('details').getAttribute('open') === '' ? true : false;
+    console.log(state);
+    this.opened = state;
+  } //listens
+
+  updated(changedProperties) {
+    changedProperties.forEach((oldValue, propName) => {
+      if(propName === 'opened') {
+        this.dispatchEvent(new CustomEvent('change-open-state', 
+        {
+          composed: true, //event occured in shadowroot but you want it to bubble up through page
+          bubbles: true,
+          cancelable: false,
+          detail: { 
+            value: this[propName]} 
+          }));
+          console.log(`${propName} changed. oldValue: ${oldValue}`);
+  
+        }
+  
+        });
+        
+
+
+    }
+  
+
 
   render() {
     return html`
     
-<div class="wrapper">
+<div class="card" part="card">
   <div class="container">
-  <meme-maker slot="borzoi meme" image-url="${meme}"
- top-text="BORZOI" bottom-text="woof. ">
-</meme-maker>
+  
+
 <!--<img class="image" src="$(meme)"/> -->
   <div class="header">
   <h3>${this.name}</h3>
+  <meme-maker image-url="${meme}"
+ top-text="${this.top}"
+ bottom-text="${this.bottom}"
+ >
+
+</meme-maker>
   <h4>${this.detail}</h4>
-    <details class="details">
+    <details class="details" .open="${this.opened}" @toggle="${this.toggleEvent}">
       <summary>Details</summary>
       <div>
-        <slot name="paragraph">The magnificent borzoi! Look how  disproportionate its nose is. Marvelous. </slot>
+        <p class="meme-paragraph">
+          <slot></slot>
+      </p>
       
       </div>
   </details>

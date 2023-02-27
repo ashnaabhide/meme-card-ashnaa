@@ -14,41 +14,66 @@
       padding: 0;
       font-family: sans-serif;
       background-color: #ededed;
-      --c: blue;
+      --meme-card-wrapper-padding: 20px;
+
     }
+    meme-card-ashnaa[accent-color="green"]{
+      --meme-car-accent-color: lightgreen;
+
+    }
+    meme-card-ashnaa[accent-color="blue"]{
+      --meme-car-accent-color: lightblue;
+
+    }
+    meme-card-ashnaa[accent-color="red"]{
+      --meme-car-accent-color: pink;
+
+    }
+
+    meme-card-ashnaa::part(card) { /*styling technique (not cascading) */
+      margin: 100px;
+    }
+
+      
+    
   </style>
   <title>meme-card-ashnaa</title>
 </head>
 
 <body>
-  <div class="buttons">
+  <div class="buttons"> <!-- use part with this -->
     <button class="duplicate">duplicate</button>
     <button class="modifytitle">modify title</button>
     <button id="deletelastcard">delete</button>
     <button data-toggle-btn>toggle</button>
-    <button class="changecolor">change color</button>
+    <button class="bg-color">change color</button>
   </div>
+
+
   <div id="app"> <!-- global scope!! -->
-    <meme-card-ashnaa></meme-card-ashnaa>
+    <meme-card-ashnaa>
+      <div>
+      The magnificent borzoi! Look how  disproportionate its nose is. Marvelous.
+      </div>
+    </meme-card-ashnaa>
   </div>
 
   <script type="module" src="./src/meme-card-ashnaa.js"></script>
   <script>
 
+    document.body.addEventListener('open-changed', (e) => {
+      document.querySelector('button[data-toggle-btn]').innerText = e.detail.value ? 'hide details' : 'show details';
+      console.log('change-open-state', e.detail, e.target);
+    })
+
 document.querySelector('button[data-toggle-btn]').addEventListener('click', (e) => {
-  const details = document.querySelector('meme-card-ashnaa').shadowRoot.querySelector('details')
-  console.log(details);
-  if (details.getAttribute('open')) {
-    details.removeAttribute('open');
-  }
-  else {
-    details.setAttribute('open','open');    
-  }
+  const card = document.querySelector('meme-card-ashnaa');
+  card.opened = !card.opened;
 });
 
     //duplicate the first item 
   document.querySelector('.duplicate').addEventListener('click', function(e) {
-    const itemToClone = document.querySelector('meme-card-ashnaa').cloneNode();
+    const itemToClone = document.querySelector('meme-card-ashnaa').cloneNode(true);
     document.querySelector('#app').appendChild(itemToClone);
 });
 
@@ -73,14 +98,13 @@ document.querySelector('#deletelastcard').addEventListener('click', function(e) 
   }
 });
 
-color.addEventListener("click", function (e) {
-  
-  if (document.querySelector('bgcolorchange') == true) {
-    document.querySelector('meme-card-ashnaa').style.backgroundColor = "purple";
-    console.log("bg color changed");
-  } else {
-    document.querySelector('bgcolorchange') = "pink";
-  }
+const changecolor = document.querySelector(".bg-color");
+changecolor.addEventListener("click", function (e){
+  //random items in an array
+  const colors = ["pink", "blue", "green"];
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
+  document.querySelector("meme-card-ashnaa").accentColor = randomColor;
+
 
 });
 

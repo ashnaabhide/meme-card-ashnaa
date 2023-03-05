@@ -204,7 +204,7 @@ details{
     <details class="details" .open="${this.opened}" @toggle="${this.toggleEvent}">
       <summary>Details</summary>
       <div>
-        <p class="meme-paragraph">
+        <p class="memeparagraph">
           <slot></slot>
       </p>
       
